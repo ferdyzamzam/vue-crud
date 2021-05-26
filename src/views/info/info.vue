@@ -1,7 +1,11 @@
 <template>
-  <div class="container-fluid py-3">
-    <div class="row row-cols-2 row-cols-md-6 g-4">
-      <div class="col" v-for="info in infos" :key="info.key">
+  <div class="container py-3">
+    <div class="row row-cols-2 row-cols-md-4 g-4">
+      <div
+        class="col"
+        v-for="(info, index) in infos"
+        v-bind:key="index + '-info'"
+      >
         <div class="card shadow">
           <img v-bind:src="info.url_image" class="card-img-top" alt="" />
           <div class="card-body">
@@ -20,45 +24,84 @@
         </div>
       </div>
     </div>
+    <InfiniteLoading @infinite="infiniteHandler"></InfiniteLoading>
   </div>
 </template>
 <script>
 import firebase from "firebase";
-import router from "@/router";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
+  components: {
+    InfiniteLoading,
+  },
+  name: "info",
   data() {
     return {
       infos: [],
+      lastDocSnapshot: null,
       ifo: firebase.firestore().collection("infos"),
     };
   },
-
+  mounted() {
+    this.fetchInfos();
+  },
   methods: {
-    showinfo(infos) {
-      console.log(infos);
-      router.push({
-        name: "info_show",
-        params: {
-          id: infos,
-        },
-      });
+    async fetchInfos() {
+      const db = firebase.firestore();
+      let infosRef = db.collection("infos").limit(4)
+
+
+      if(this.lastDocSnapshot){
+        infosRef = infosRef.startAfter(this.lastDocSnapshot)
+      }
+
+
+      const infosSnap = await infosRef.get();
+      this.lastDocSnapshot = infosSnap.docs[infosSnap.docs.length - 1]
+      const result = infosSnap.docs.map((p) => p.data());
+
+      this.infos.push(...result)
+
+      return result.length
+    },
+
+    async infiniteHandler($state){
+      const newInfosCount = await this.fetchInfos()
+
+      if(newInfosCount > 0){
+        return $state.loaded()
+      }
+
+      return $state.complete()
     },
   },
 
-  created() {
-    this.ifo.onSnapshot((querySnapshot) => {
-      this.infos = [];
-      querySnapshot.forEach((ifo) => {
-        this.infos.push({
-          key: ifo.id,
-          judul: ifo.data().judul,
-          des: ifo.data().des,
-          tanggal: ifo.data().tanggal,
-          url_image: ifo.data().url_image,
-        });
-      });
-    });
-  },
+  // methods: {
+  //   showinfo(infos) {
+  //     console.log(infos);
+  //     router.push({
+  //       name: "info_show",
+  //       params: {
+  //         id: infos,
+  //       },
+  //     });
+  //   },
+  // },
+
+  // created() {
+  //   this.ifo.onSnapshot((querySnapshot) => {
+  //     this.infos = [];
+  //     querySnapshot.forEach((ifo) => {
+  //       this.infos.push({
+  //         key: ifo.id,
+  //         judul: ifo.data().judul,
+  //         des: ifo.data().des,
+  //         tanggal: ifo.data().tanggal,
+  //         url_image: ifo.data().url_image,
+  //       });
+  //     });
+  //   });
+  // },
 };
 </script>

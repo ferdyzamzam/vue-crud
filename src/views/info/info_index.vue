@@ -39,7 +39,7 @@
                   Edit
                 </router-link>
                 <button
-                  @click.prevent="deleteSiswa(info.key)"
+                  @click.prevent="deleteInfo(info.key)"
                   class="btn btn-sm btn-danger"
                 >
                   Delete
@@ -63,7 +63,7 @@ export default {
   },
 
   created() {
-    this.fo.onSnapshot((querySnapshot) => {
+    this.fo.get().then((querySnapshot) => {
       this.infos = [];
       querySnapshot.forEach((fo) => {
         this.infos.push({
@@ -75,6 +75,33 @@ export default {
         });
       });
     });
+
+    // var first = firebase.firestore().collection('infos').limit(5);
+    // return first.get().then((documentSnapshots) =>{
+    //   var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
+    //   console.log('tes', lastVisible);
+
+    //   firebase.firestore().collection('infos').startAfter(lastVisible).limit(5);
+    // });
+    
+  },
+
+  methods: {
+    deleteInfo(id) {
+      if (window.confirm("Apakah Anda Yakin Ingin Menghapus Data Ini?")) {
+        firebase
+          .firestore()
+          .collection("infos")
+          .doc(id)
+          .delete()
+          .then(() => {
+            console.log("Data Terhapus!");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    },
   },
 };
 </script>

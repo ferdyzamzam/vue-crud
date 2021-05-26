@@ -14,7 +14,9 @@
     "firebase": "^8.6.2",
     "jquery": "^3.6.0",
     "jquery-ui": "^1.12.1",
+    "jw-vue-pagination": "^1.0.3",
     "vue": "^2.6.12",
+    "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.5.1"
   },
   "devDependencies": {

@@ -1,95 +1,103 @@
 <template>
   <div class="container">
-    <br />
     <div class="row">
-      <div class="col-md-8">
-        <center>
-          <h3>Siswa</h3>
-        </center>
-        <input type="text" v-model="search" placeholder="Cari..." />
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Kelas</th>
-              <th scope="col">Umur</th>
-              <th scope="col">opsi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(siswa, index) in filteredsiswas" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td>{{ siswa.nama }}</td>
-              <td>{{ siswa.kelas }}</td>
-              <td>{{ siswa.umur }}</td>
-              <td>
-                <router-link
-                  :to="{ name: 'edit', params: { id: siswa.key } }"
-                  class="btn btn-sm btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  Edit
-                </router-link>
-                |
-                <button
-                  @click.prevent="deleteSiswa(siswa.key)"
-                  class="btn btn-sm btn-danger"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-md-4">
-        <h3>Tambah</h3>
-        <form @submit.prevent="onFormSubmit">
-          <div class="form-group">
-            <label>Nama</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="siswa.nama"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Kelas</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="siswa.kelas"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Umur</label>
-            <input
-              type="number"
-              class="form-control"
-              v-model="siswa.umur"
-              required
-            />
-          </div>
-          <br />
-          <div class="form-group">
-            <button
-              class="btn btn-success btn-block"
-              type="button"
-              v-if="loading"
-            >
-              <div class="spinner-border" role="status">
-                <span class="sr-only"></span>
+      <div class="col mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h3>Tambah</h3>
+            <form @submit.prevent="onFormSubmit">
+              <div class="form-group">
+                <label>Nama</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="siswa.nama"
+                  required
+                />
               </div>
-            </button>
-            <button class="btn btn-success btn-block" type="submit" v-else>
-              Simpan
-            </button>
+              <div class="form-group">
+                <label>Kelas</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="siswa.kelas"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Umur</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="siswa.umur"
+                  required
+                />
+              </div>
+              <br />
+              <div class="form-group">
+                <button
+                  class="btn btn-success btn-block"
+                  type="button"
+                  v-if="loading"
+                >
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                  </div>
+                </button>
+                <button class="btn btn-success btn-block" type="submit" v-else>
+                  Simpan
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
+      </div>
+      <div class="col mt-4">
+        <div class="card">
+          <div class="card-body">
+            <center>
+              <h3>Siswa</h3>
+            </center>
+            <input type="text" v-model="search" placeholder="Cari..." />
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Kelas</th>
+                    <th scope="col">Umur</th>
+                    <th scope="col">opsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(siswa, index) in resultsearch" :key="index">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ siswa.nama }}</td>
+                    <td>{{ siswa.kelas }}</td>
+                    <td>{{ siswa.umur }}</td>
+                    <td>
+                      <router-link
+                        :to="{ name: 'edit', params: { id: siswa.key } }"
+                        class="btn btn-sm btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        Edit
+                      </router-link>
+                      <button
+                        @click.prevent="deleteSiswa(siswa.key)"
+                        class="btn btn-sm btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -108,10 +116,17 @@ export default {
     };
   },
   computed: {
-    filteredsiswas: function () {
-      return this.siswas.filter((siswa) => {
-        return siswa.nama.match(this.search);
-      });
+    resultsearch() {
+      if (this.search) {
+        return this.siswas.filter((item) => {
+          return this.search
+            .toLowerCase()
+            .split("")
+            .every((v) => item.nama.toLowerCase().includes(v));
+        });
+      } else {
+        return this.siswas;
+      }
     },
   },
   created() {

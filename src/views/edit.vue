@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <br />
-    <div class="col-5">
+    <div class="col">
       <div class="card">
         <div class="card-header">Edit</div>
         <div class="card-body">

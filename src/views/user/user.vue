@@ -1,95 +1,98 @@
 <template>
   <div class="container">
-    <br />
     <div class="row">
-      <div class="col-md-8">
-        <center>
-          <h3>User</h3>
-        </center>
-        <input type="text" v-model="search" placeholder="Cari..." />
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th scope="col">username</th>
-              <th scope="col">Email</th>
-              <th scope="col">Tanggal</th>
-              <th scope="col">opsi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(user, index) in filteredusers" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.tanggal }}</td>
-              <td>
-                <router-link
-                  :to="{ name: 'edit_user', params: { id: user.key } }"
-                  class="btn btn-sm btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  Edit
-                </router-link>
-                |
-                <button
-                  @click.prevent="deleteSiswa(user.key)"
-                  class="btn btn-sm btn-danger"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-md-4">
-        <h3>Tambah</h3>
-        <form @submit.prevent="onFormSubmit">
-          <div class="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="user.username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              class="form-control"
-              v-model="user.email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Tanggal</label>
-            <input
-              type="date"
-              class="form-control"
-              v-model="user.tanggal"
-              required
-            />
-          </div>
-          <br />
-          <div class="form-group">
-            <button
-              class="btn btn-success btn-block"
-              type="button"
-              v-if="loading"
-            >
-              <div class="spinner-border" role="status">
-                <span class="sr-only"></span>
+      <div class="col mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h3>Tambah</h3>
+            <form @submit.prevent="onFormSubmit">
+              <div class="form-group">
+                <label>Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="user.username"
+                  required
+                />
               </div>
-            </button>
-            <button class="btn btn-success btn-block" type="submit" v-else>
-              Simpan
-            </button>
+              <div class="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  v-model="user.email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  v-model="user.tanggal"
+                  required
+                />
+              </div>
+              <br />
+              <div class="form-group">
+                <button
+                  class="btn btn-success btn-block"
+                  type="button"
+                  v-if="loading"
+                >
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                  </div>
+                </button>
+                <button class="btn btn-success btn-block" type="submit" v-else>
+                  Simpan
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
+      </div>
+      <div class="col mt-4">
+        <div class="card">
+          <div class="card-body">
+            <input type="text" v-model="search" placeholder="Cari..." />
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Opsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(user, index) in resultsearch" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.tanggal }}</td>
+                    <td>
+                      <router-link
+                        :to="{ name: 'edit_user', params: { id: user.key } }"
+                        class="btn btn-sm btn-primary"
+                      >
+                        Edit
+                      </router-link>
+                      <button
+                        @click.prevent="deleteSiswa(user.key)"
+                        class="btn btn-sm btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -104,7 +107,7 @@ export default {
       users: [],
       user: {},
       loading: false,
-      search: "",
+      search: null,
     };
   },
 
@@ -154,11 +157,19 @@ export default {
         });
     },
   },
+
   computed: {
-    filteredusers: function () {
-      return this.users.filter((user) => {
-        return user.username.match(this.search);
-      });
+    resultsearch() {
+      if (this.search) {
+        return this.users.filter((item) => {
+          return this.search
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.username.toLowerCase().includes(v));
+        });
+      } else {
+        return this.users;
+      }
     },
   },
 };

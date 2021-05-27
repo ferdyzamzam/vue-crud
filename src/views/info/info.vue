@@ -50,19 +50,13 @@ export default {
     async fetchInfos() {
       const db = firebase.firestore();
       let infosRef = db.collection("infos").limit(4)
-
-
       if(this.lastDocSnapshot){
         infosRef = infosRef.startAfter(this.lastDocSnapshot)
       }
-
-
       const infosSnap = await infosRef.get();
       this.lastDocSnapshot = infosSnap.docs[infosSnap.docs.length - 1]
       const result = infosSnap.docs.map((p) => p.data());
-
       this.infos.push(...result)
-
       return result.length
     },
 

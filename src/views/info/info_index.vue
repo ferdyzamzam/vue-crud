@@ -63,7 +63,7 @@ export default {
   },
 
   created() {
-    this.fo.get().then((querySnapshot) => {
+    this.fo.onSnapshot((querySnapshot) => {
       this.infos = [];
       querySnapshot.forEach((fo) => {
         this.infos.push({

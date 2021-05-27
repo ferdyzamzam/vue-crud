@@ -9,7 +9,8 @@ import info from '@/views/info/info.vue';
 import info_create from '@/views/info/info_create.vue';
 import info_show from '@/views/info/info_show.vue';
 import info_index from '@/views/info/info_index.vue';
-import info_edit from '@/views/info/info_edit.vue'
+import info_edit from '@/views/info/info_edit.vue';
+import category from '@/views/category.vue';
 
 
 Vue.use(VueRouter);
@@ -66,6 +67,11 @@ const router = new VueRouter({
             path: '/info/edit/:id',
             name: 'info_edit',
             component: info_edit,
+        },
+        {
+            path: '/category',
+            name: 'category',
+            component:category,
         }
 
     ]

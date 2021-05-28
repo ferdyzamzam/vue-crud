@@ -19,14 +19,14 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'Home',
+            component: Home,
+        },
+        {
             path: '/index',
             name: 'index',
             component: Index,
-        },
-        {
-            path: '/home',
-            name: 'home',
-            component: Home,
         },
         {
             path: '/edit/:id',

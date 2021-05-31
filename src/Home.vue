@@ -13,7 +13,7 @@
     </div>
     <form class="container">
       <div class="form-group row">
-        <div class="col-md-12">
+        <div class="col-md-9">
           <label for="selectCountry">
             <b>Negara</b>
           </label>
@@ -33,11 +33,11 @@
             </option>
           </select>
         </div>
-        <div class="col-3 col-md-1">
-          <span class="badge badge-secondary" @click="reset">
-            <!-- <i class="fa fa-window-close"></i> -->
+        <div class="col-3">
+          <button type="button" class="btn btn-secondary" @click="reset">
+            <i class="fa fa-window-close"></i>
             Reset
-          </span>
+          </button>
         </div>
       </div>
     </form>

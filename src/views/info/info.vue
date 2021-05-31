@@ -49,25 +49,25 @@ export default {
   methods: {
     async fetchInfos() {
       const db = firebase.firestore();
-      let infosRef = db.collection("infos").limit(4)
-      if(this.lastDocSnapshot){
-        infosRef = infosRef.startAfter(this.lastDocSnapshot)
+      let infosRef = db.collection("infos").limit(4);
+      if (this.lastDocSnapshot) {
+        infosRef = infosRef.startAfter(this.lastDocSnapshot);
       }
       const infosSnap = await infosRef.get();
-      this.lastDocSnapshot = infosSnap.docs[infosSnap.docs.length - 1]
+      this.lastDocSnapshot = infosSnap.docs[infosSnap.docs.length - 1];
       const result = infosSnap.docs.map((p) => p.data());
-      this.infos.push(...result)
-      return result.length
+      this.infos.push(...result);
+      return result.length;
     },
 
-    async infiniteHandler($state){
-      const newInfosCount = await this.fetchInfos()
+    async infiniteHandler($state) {
+      const newInfosCount = await this.fetchInfos();
 
-      if(newInfosCount > 0){
-        return $state.loaded()
+      if (newInfosCount > 0) {
+        return $state.loaded();
       }
 
-      return $state.complete()
+      return $state.complete();
     },
   },
 

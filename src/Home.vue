@@ -52,7 +52,9 @@
               <i class="fa fa-check-square"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ allCovid.confirmed }}</h3>
+              <h3 class="card-title">
+                {{ allCovid.confirmed | formatNumber }}
+              </h3>
             </div>
           </div>
         </div>
@@ -63,7 +65,9 @@
               <i class="fa fa-retweet"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ allCovid.recovered }}</h3>
+              <h3 class="card-title">
+                {{ allCovid.recovered | formatNumber }}
+              </h3>
             </div>
           </div>
         </div>
@@ -74,7 +78,7 @@
               <i class="fa fa-ambulance"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ allCovid.deaths }}</h3>
+              <h3 class="card-title">{{ allCovid.deaths | formatNumber }}</h3>
             </div>
           </div>
         </div>
@@ -90,7 +94,9 @@
               <i class="fa fa-check-square"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ selectCountry.confirmed }}</h3>
+              <h3 class="card-title">
+                {{ selectCountry.confirmed | formatNumber }}
+              </h3>
             </div>
           </div>
         </div>
@@ -101,7 +107,9 @@
               <i class="fa fa-retweet"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ selectCountry.recovered }}</h3>
+              <h3 class="card-title">
+                {{ selectCountry.recovered | formatNumber }}
+              </h3>
             </div>
           </div>
         </div>
@@ -112,7 +120,9 @@
               <i class="fa fa-ambulance"></i>
             </div>
             <div class="card-body">
-              <h3 class="card-title">{{ selectCountry.deaths }}</h3>
+              <h3 class="card-title">
+                {{ selectCountry.deaths | formatNumber }}
+              </h3>
             </div>
           </div>
         </div>
@@ -196,6 +206,14 @@
 </template>
 <script>
 import axios from "axios";
+import Vue from "vue";
+
+var numeral = require("numeral");
+
+Vue.filter("formatNumber", function (value) {
+  return numeral(value).format("0,0"); // displaying other groupings/separators is possible, look at the docs
+});
+
 export default {
   components: {
     Footer: () => import("@/components/Footer.vue"),

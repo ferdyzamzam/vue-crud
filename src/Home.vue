@@ -13,7 +13,7 @@
     </div>
     <form class="container">
       <div class="form-group row">
-        <div class="col-md-9">
+        <div class="col-md-12">
           <label for="selectCountry">
             <b>Negara</b>
           </label>
@@ -33,7 +33,7 @@
             </option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-6 col-md-8">
           <button type="button" class="btn btn-secondary" @click="reset">
             <i class="fa fa-window-close"></i>
             Reset

@@ -35,6 +35,11 @@
                 >API Quotes</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/info/index"
+                >Data Info</router-link
+              >
+            </li>
             <!-- <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"

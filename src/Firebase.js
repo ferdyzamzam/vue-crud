@@ -1,13 +1,13 @@
 import firebase from 'firebase';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyBP5TJ1m25u22qrzgaN05l8w9QN3odq4-0",
-    authDomain: "tes-vue-3c38b.firebaseapp.com",
-    projectId: "tes-vue-3c38b",
-    storageBucket: "tes-vue-3c38b.appspot.com",
-    messagingSenderId: "122664509235",
-    appId: "1:122664509235:web:19163853882e4ccbae2846",
-    measurementId: "G-17CW48WN3T"
+    apiKey: "AIzaSyBIVCCXDdNxlB2DpecTcKe5SRtCOHvG10Q",
+    authDomain: "vue-patterns.firebaseapp.com",
+    projectId: "vue-patterns",
+    storageBucket: "vue-patterns.appspot.com",
+    messagingSenderId: "539152055131",
+    appId: "1:539152055131:web:e4126a3f0fad850569b87e",
+    measurementId: "G-59DF0LS6HB"
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

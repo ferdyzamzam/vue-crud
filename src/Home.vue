@@ -7,7 +7,7 @@
         <hr />
         <p class="mb-0">
           Data ini di perbaharui pada:
-          <strong>{{ allCovid.lastUpdate }}</strong>
+          <strong>{{ createdAtDisplay }}</strong>
         </p>
       </div>
     </div>
@@ -207,6 +207,7 @@
 <script>
 import axios from "axios";
 import Vue from "vue";
+import moment from "moment";
 
 var numeral = require("numeral");
 
@@ -221,7 +222,7 @@ export default {
   data() {
     return {
       apiURL: "https://covid19.mathdro.id/api/",
-      apiURL2: "https://api.kawalcorona.com/indonesia/",
+      apiURL2: "https://api.kawalcorona.com/",
 
       allCovid: {
         confirmed: "",
@@ -250,6 +251,12 @@ export default {
     };
   },
 
+  computed: {
+    createdAtDisplay() {
+      return moment(this.allCovid.lastUpdate).format("YYYY-MM-DD h:mm A");
+    },
+  },
+
   mounted() {
     this.getAllCovid();
     this.getCountries();
@@ -260,7 +267,7 @@ export default {
         this.allCovid.confirmed = response.data.confirmed.value;
         this.allCovid.recovered = response.data.recovered.value;
         this.allCovid.deaths = response.data.deaths.value;
-        this.allCovid.lastUpdate = response.data.lastUpdate.value;
+        this.allCovid.lastUpdate = response.data.lastUpdate;
       });
     },
 

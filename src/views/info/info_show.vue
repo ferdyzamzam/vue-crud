@@ -11,7 +11,7 @@
         <small class="text-muted">{{ info.tanggal }}</small>
       </p>
     </div>
-    <router-link to="/info" class="btn btn-sm">Kembali</router-link>
+    <router-link to="/info/index" class="btn btn-sm">Kembali</router-link>
   </div>
 </template>
 <script>

@@ -16,6 +16,7 @@
     "jquery": "^3.6.0",
     "jquery-ui": "^1.12.1",
     "jw-vue-pagination": "^1.0.3",
+    "moment": "^2.29.1",
     "numeral": "^2.0.6",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",

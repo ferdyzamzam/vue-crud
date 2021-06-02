@@ -7,16 +7,15 @@
         v-bind:key="index + '-info'"
       >
         <div class="card shadow">
-          <img v-bind:src="info.url_image" class="card-img-top" alt="" />
+          <img v-bind:src="info.url_image" class="card-img-top" alt="gambar" />
           <div class="card-body">
             <h6 class="card-title">{{ info.judul }}</h6>
-            <p class="card-text"></p>
-            <button
+            <!-- <button
               class="btn btn-sm btn-primary float-right"
               @click="showinfo(info.key)"
             >
               selengkapnya...
-            </button>
+            </button> -->
           </div>
           <div class="card-footer">
             <small class="text-muted">{{ info.tanggal }}</small>
@@ -30,6 +29,7 @@
 <script>
 import firebase from "firebase";
 import InfiniteLoading from "vue-infinite-loading";
+import router from "@/router";
 
 export default {
   components: {
@@ -43,10 +43,17 @@ export default {
       ifo: firebase.firestore().collection("infos"),
     };
   },
-  mounted() {
-    this.fetchInfos();
-  },
   methods: {
+    showinfo(infos) {
+      console.log(infos);
+      router.push({
+        name: "info_show",
+        params: {
+          id: infos,
+        },
+      });
+    },
+
     async fetchInfos() {
       const db = firebase.firestore();
       let infosRef = db.collection("infos").limit(4);
@@ -82,7 +89,6 @@ export default {
   //     });
   //   },
   // },
-
   // created() {
   //   this.ifo.onSnapshot((querySnapshot) => {
   //     this.infos = [];

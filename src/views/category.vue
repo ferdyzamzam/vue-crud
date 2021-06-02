@@ -58,7 +58,7 @@ export default {
     this.quotes1 = response.data.copyright;
     this.quotesurl = response.data;
 
-    console.log(this.quotes1);
+    console.log(this.quotesurl);
   },
 };
 </script>

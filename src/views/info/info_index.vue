@@ -44,6 +44,12 @@
                 >
                   Delete
                 </button>
+
+                <router-link
+                  class="btn btn-sm btn-success"
+                  :to="{ name: 'info_show', params: { id: info.key } }"
+                  >Detail</router-link
+                >
               </td>
             </tr>
           </tbody>
@@ -83,7 +89,6 @@ export default {
 
     //   firebase.firestore().collection('infos').startAfter(lastVisible).limit(5);
     // });
-    
   },
 
   methods: {

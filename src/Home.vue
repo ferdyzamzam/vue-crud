@@ -128,28 +128,28 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="container">
-      <h4>Tampilkan Data</h4>
-      <div class="row">
-        <div class="col-6 col-md-6">
-          <button class="btn btn-primary" @click="showAll" v-if="!getAll">
-            Se-dunia
-          </button>
-          <i v-if="getAll">Tunggu bentar...</i>
+  <!-- 
+      <div class="container">
+        <h4>Tampilkan Data</h4>
+        <div class="row">
+          <div class="col-6 col-md-6">
+            <button class="btn btn-primary" @click="showAll" v-if="!getAll">
+              Se-dunia
+            </button>
+            <i v-if="getAll">Tunggu bentar...</i>
+          </div>
+          <div class="col-6 col-md-6">
+            <button
+              class="btn btn-warning text-light"
+              @click="showByProvinsiIndo"
+              v-if="!getByProv"
+            >
+              Indonesia Saja
+            </button>
+            <i v-if="getByProv">Tunggu bentar...</i>
+          </div>
         </div>
-        <div class="col-6 col-md-6">
-          <button
-            class="btn btn-warning text-light"
-            @click="showByProvinsiIndo"
-            v-if="!getByProv"
-          >
-            Indonesia Saja
-          </button>
-          <i v-if="getByProv">Tunggu bentar...</i>
-        </div>
-      </div>
-    </div> -->
+      </div> -->
 
     <div class="container" v-if="allData.length != ''">
       <div class="table table-responsive">

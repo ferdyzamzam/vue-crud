@@ -115,6 +115,7 @@ export default {
       loading: false,
     };
   },
+
   computed: {
     resultsearch() {
       if (this.search) {

@@ -43,6 +43,7 @@ export default {
       ifo: firebase.firestore().collection("infos"),
     };
   },
+
   methods: {
     showinfo(infos) {
       console.log(infos);
@@ -57,6 +58,7 @@ export default {
     async fetchInfos() {
       const db = firebase.firestore();
       let infosRef = db.collection("infos").limit(4);
+      console.log(infosRef);
       if (this.lastDocSnapshot) {
         infosRef = infosRef.startAfter(this.lastDocSnapshot);
       }
